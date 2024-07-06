@@ -215,50 +215,6 @@ def main(args):
             print_and_log(logger, "="*50)
             
 
-            # net = copy.deepcopy(model.net)
-            # args.lr = args.finetune_lr / 2
-            # args.epochs = args.finetune_epochs
-            # finetune_optimizer, finetune_lr_scheduler = load_optimizer_and_scheduler(net, args)
-            # try:
-            #     print_and_log(args.logger, finetune_optimizer)
-            #     print_and_log(args.logger, finetune_lr_scheduler)
-            # except:
-            #     print(finetune_optimizer)
-            #     print(finetune_lr_scheduler)
-            # print_and_log(logger, f"Defense with stronger LR by Finetuning (SGD - {args.lr}) backdoored model on clean data")
-            # print_and_log(logger, "="*50)
-
-            # loss_hist_3 = finetuning(net, finetune_loader, finetune_optimizer, finetune_lr_scheduler, 
-            #                         criterion, testloaders, epochs=args.finetune_epochs, device=device, 
-            #                         args=args)
-            
-            # # ft_backbone_saved_file = args.ckpt_file.replace('.pth.tar', f'ft_sgd_{args.lr}.pth.tar')
-            # # save_backbone_only(net,ft_backbone_saved_file)
-
-            # clean_acc = test_model(net, clean_test_loader, device, args)
-            # poison_acc = test_model(net, poisoned_test_loader, device, args)
-
-            # L0, L1, L2, Linf = get_LP_dis(model.net, net)
-
-            # results[defense_method + f' w. SGD-{args.lr}'] = {
-            #     'clean_acc' : clean_acc,
-            #     'poison_acc' : poison_acc,
-            #     'lr' : args.lr,
-            #     'L0 distance': L0,
-            #     'L1 distance': L1,
-            #     'L2 distance': L2,
-            #     'Linf distance': Linf,
-            # }
-            # print_and_log(logger, f'L0 distance: \t {L0}')
-            # print_and_log(logger, f'L1 distance: \t {L1}')
-            # print_and_log(logger, f'L2 distance: \t {L2}')
-            # print_and_log(logger, f'Linf distance: \t {Linf}')
-
-            # print_and_log(logger, "="*50)
-            # print_and_log(logger, f"Test accuracy on clean testing data: {clean_acc:.2f}")
-            # print_and_log(logger, f"Test accuracy on poisoned testing data: {poison_acc:.2f}%")
-            # print_and_log(logger, "="*50)
-
 
         #############################################################
         ############# NEURAL ATTENTIVE DISTILLATION #################
@@ -399,15 +355,6 @@ def main(args):
             print_and_log(logger, f"Final Test accuracy on poisoned testing data: {poison_acc:.2f}%")
             print_and_log(logger, "="*50)
 
-    # if wandb is not None:
-    #     wandb.log({'Training loss task 3': loss_hist_3})
-    #     wandb.log({'task_3_clean_acc': clean_acc, 'task_3_poison_acc': clean_acc})
-
-    #################
-    # print_and_log(logger, '='*50)
-    # print_and_log(logger, '='*50)
-    # if args.cl_method == 'joint':
-    #     print_and_log(logger, f'Test accuracy of Backdoor model on clean testing data: {results['clean_acc']:.2f}%')
 
     log_final_results(results, args)
 
