@@ -35,23 +35,25 @@ def add_arguments(parser: ArgumentParser):
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--p_intervals', type=int, default=10)
 
-    parser.add_argument('--defenses', nargs='+', type=str, default=['ft', 'nad'])
+    parser.add_argument('--defenses', nargs='+', type=str, default=['ft', 'nad'], \
+                        help='list defense methods')
 
-    parser.add_argument('--poisoning_method', type=str, default='badnet')
+    parser.add_argument('--poisoning_method', type=str, default='badnet',\
+                        help='poisoning methods: badnet, blended, sig')
     parser.add_argument('--target_label', type=int, default=0)
     parser.add_argument('--poisoning_rate', type=float, default=0.1)
     parser.add_argument('--trigger_size', type=int, default=3)
-    parser.add_argument('--task_portion', nargs='+', type=float, default=[0.05, 0.8, 0.15], 
-                        help="The portion of data for finetuning clean data, clean data, and mixed data")
-    parser.add_argument('--mixed_first', action='store_true', default=False)
+    parser.add_argument('--task_portion', nargs='+', type=float, default=[0.05, 0.1, 0.85], \
+                        help="The portion of data for finetuning clean data (Step 1), unseen clean data (Defense), and mixed data (Step 0)")
+    parser.add_argument('--mixed_first', action='store_true', default=False, help='Training the mixed of clean and poison first')
     parser.add_argument('--is_dat', action='store_true', default=False, \
                         help="Dynamically adding triggers during training")
-    parser.add_argument('--data_mode', type=int, default=0, 
+    parser.add_argument('--data_mode', type=int, default=0, \
                         help='0: all separate, 1: attack defense separate, 2: fine-tune on seen data')
     parser.add_argument('--input_size', type=int, default=32)
 
-    parser.add_argument('--is_wandb', action='store_true', default=False)
-    parser.add_argument('--wandb_note', type=str, default='')
-    parser.add_argument('--is_saved', action='store_true', default=False)
-    parser.add_argument('--is_load', action='store_true', default=False)
+    parser.add_argument('--is_wandb', action='store_true', default=False, help='report to wandb')
+    parser.add_argument('--wandb_note', type=str, default='', help='note for wandb and logging name')
+    parser.add_argument('--is_saved', action='store_true', default=False, help='save model')
+    parser.add_argument('--is_load', action='store_true', default=False, help='load model')
     parser.add_argument('--debug_mode', action='store_true', default=False)

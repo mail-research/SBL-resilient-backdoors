@@ -13,15 +13,31 @@ Figure 1: *(a) Intuition for fine-tuning defense against conventional backdoor l
 Figure b and d visualize the loss and the accuracy on clean and poisoned test sets of intermediate models when linearly interpolating between backdoored and fine-tuned models with CBL and SBL.*
 
 ## Setup
-
-
+We need the following:
+- Conda or miniconda
+- Python >= 3.10
+- Requirement Libs installed by:
 ```bash
 pip install -r requirements.txt
 ```
 
+
 ## Run code
 
+
+### Running BadNets with Resnet18 - CIFAR-10 with EWC
+```python
+python main.py --dataset cifar10 --backbone resnet18 --cl_method ewc --batch_size 256 --epochs 150 --finetune_epochs 50 --sec_epochs 100 --finetune_lr 0.01 --lr 0.01 --sec_lr 0.001 --task_portion 0.05 0.1 0.85 --poisoning_rate 0.1 --poisoning_method badnet --target_label 0 --trigger_size 3 --num_workers 4 --lr_scheduler CosineAnnealingLR --mixed_first --is_dat --opt_mode sam --p_intervals 1 --wandb_note attack --is_saved --is_load --seed 1
+```
+
+### Running BadNets with Resnet18 - CIFAR-10 with EWC
+```python
+python run_defense.py --dataset cifar10 --backbone resnet18 --cl_method ewc --batch_size 256 --epochs 150 --finetune_epochs 50 --sec_epochs 100 --finetune_lr 0.01 --lr 0.01 --sec_lr 0.001 --task_portion 0.05 0.1 0.85 --poisoning_rate 0.1 --poisoning_method badnet --target_label 0 --trigger_size 3 --num_workers 4 --lr_scheduler CosineAnnealingLR --defenses 'ft' 'nad' 'sam_ft' --mixed_first --is_dat --opt_mode sam --p_intervals 1 --wandb_note defense --is_saved --is_load --seed 1
+```
+
+### Running other experiments on CIFAR-10 and GTSRB follows:
 ```bash
 sh run_cifar.sh
+sh run_gtsrb.sh
 ```
 
